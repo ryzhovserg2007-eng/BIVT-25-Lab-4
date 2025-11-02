@@ -55,36 +55,44 @@ namespace Lab4
             int[] negatives = null;
 
             // code here
-            int max = 0, min = 0;
 
-            // Находим индексы максимального и минимального элементов
+            // end
+            int min = 1000; int max = -1000;
+            int imax = 0; int imin = 0;
             for (int i = 0; i < array.Length; i++)
             {
-                if (array[i] > array[max])
-                    max = i;
-                if (array[i] < array[min])
-                    min = i;
+
+                if (array[i] > max)
+                {
+                    max = array[i];
+                    imax = i;
+                }
+
+                if (array[i] < min)
+                {
+                    min = array[i];
+                    imin = i;
+                }
             }
-
-            // Определяем порядок (чтобы всегда идти от меньшего индекса к большему)
-            int start = Math.Min(max, min);
-            int end = Math.Max(max, min);
-
-            // Создаём пустой массив для отрицательных
-            negatives = new int[0];
-
-            // Перебираем элементы между max и min (исключая их)
-            for (int i = start + 1; i < end; i++)
+            int n = 0;
+            int st = Math.Min(imin, imax);
+            int fn = Math.Max(imin, imax);
+            for (int i = st + 1; i < fn; i++)
             {
                 if (array[i] < 0)
                 {
-                    // Увеличиваем массив на 1 элемент
-                    Array.Resize(ref negatives, negatives.Length + 1);
-                    // Добавляем найденный отрицательный элемент в конец массива
-                    negatives[negatives.Length - 1] = array[i];
+                    n++;
                 }
             }
-            // end
+            negatives = new int[n];
+            n = 0;
+            for (int i = st + 1; i < fn; i++)
+            {
+                if (array[i] < 0)
+                {
+                    negatives[n++] = array[i];
+                }
+            }
 
             return negatives;
         }
